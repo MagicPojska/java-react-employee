@@ -1,8 +1,18 @@
 import React from 'react'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { getAllEmployees } from '../services/EmployeeSrvice'
 
 export const ListEmployee = () => {
     const [employees, setEmployees] = useState([])
+
+    useEffect(() => {
+        const response = async () => {
+            const res = await getAllEmployees();
+            setEmployees(res.data)
+        }
+        response();
+    }, [])
+
     return (
         <div className='container'>
             <h2 className='text-center'>List Employees</h2>
