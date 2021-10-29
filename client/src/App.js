@@ -1,3 +1,4 @@
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { Footer } from "./components/Footer";
 import { Header } from "./components/Header";
 import { ListEmployee } from "./components/ListEmployee";
@@ -5,9 +6,16 @@ import { ListEmployee } from "./components/ListEmployee";
 const App = () => {
   return (
     <div>
-      <Header />
-      <ListEmployee />
-      <Footer />
+      <Router>
+        <Header />
+        <div className="container">
+          <Switch>
+            <Route exact path="/" component={ListEmployee}></Route>
+            <Route path="/employees" component={ListEmployee}></Route>
+          </Switch>
+        </div>
+        <Footer />
+      </Router>
     </div>
   );
 };
