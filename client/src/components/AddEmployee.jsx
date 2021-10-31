@@ -27,10 +27,14 @@ export const AddEmployee = () => {
     useEffect(() => {
         if (id) {
             const response = async () => {
-                const res = await getEmployeeById(id);
-                setFirstName(res.data.firstName)
-                setLastName(res.data.lastName)
-                setEmailId(res.data.emailId)
+                try {
+                    const res = await getEmployeeById(id);
+                    setFirstName(res.data.firstName)
+                    setLastName(res.data.lastName)
+                    setEmailId(res.data.emailId)
+                } catch (error) {
+                    console.log(error)
+                }
             }
             response();
         }

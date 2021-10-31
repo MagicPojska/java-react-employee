@@ -7,8 +7,12 @@ export const ListEmployee = () => {
     const [employees, setEmployees] = useState([])
 
     const response = async () => {
-        const res = await getAllEmployees();
-        setEmployees(res.data)
+        try {
+            const res = await getAllEmployees();
+            setEmployees(res.data)
+        } catch (error) {
+            console.log(error)
+        }
     }
 
     useEffect(() => {
@@ -16,7 +20,11 @@ export const ListEmployee = () => {
     }, [])
 
     const deleteEmp = async (id) => {
-        await deleteEmployee(id)
+        try {
+            await deleteEmployee(id)
+        } catch (error) {
+            console.log(error)
+        }
         response();
     }
 
