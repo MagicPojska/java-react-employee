@@ -1,12 +1,13 @@
-import { useState } from "react"
-import { useHistory } from "react-router"
-import { createEmployee } from "../services/EmployeeService"
+import { useState, useEffect } from "react"
+import { useHistory, useParams } from "react-router"
+import { createEmployee, getEmployeeById } from "../services/EmployeeService"
 
 export const AddEmployee = () => {
     const [firstName, setFirstName] = useState('')
     const [lastName, setLastName] = useState('')
     const [emailId, setEmailId] = useState('')
     const history = useHistory()
+    const { id } = useParams()
 
     const saveEmployee = async (e) => {
         e.preventDefault();
@@ -20,16 +21,26 @@ export const AddEmployee = () => {
         } catch (error) {
             console.log(error);
         }
-
-
     }
+
+    useEffect(() => {
+        if (id) {
+            const response = async () => {
+                const res = await getEmployeeById(id);
+                setFirstName(res.data.firstName)
+                setLastName(res.data.lastName)
+                setEmailId(res.data.emailId)
+            }
+            response();
+        }
+    }, [])
 
     return (
         <div>
             <div className='container pt-3'>
                 <div className='row'>
                     <div className='card col-md-6 offset-md-3'>
-                        <h2 className='text-center'>Add Employee</h2>
+                        <h2 className='text-center'>{id ? 'Update Employee' : 'Add Employee'}</h2>
                         <div className='card-body'>
                             <form action="">
                                 <div className='form-group mb-2'>

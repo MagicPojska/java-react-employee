@@ -14,6 +14,7 @@ const App = () => {
             <Route exact path="/" component={ListEmployee}></Route>
             <Route path="/employees" component={ListEmployee}></Route>
             <Route path="/add-employee" component={AddEmployee}></Route>
+            <Route path="/edit-employee/:id" component={AddEmployee}></Route>
           </Switch>
         </div>
         <Footer />
