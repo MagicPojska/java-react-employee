@@ -34,7 +34,7 @@ export const AddEmployee = () => {
             }
             response();
         }
-    }, [])
+    })
 
     return (
         <div>

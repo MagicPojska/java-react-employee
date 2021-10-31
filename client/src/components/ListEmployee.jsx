@@ -1,18 +1,24 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { getAllEmployees } from '../services/EmployeeService'
+import { deleteEmployee, getAllEmployees } from '../services/EmployeeService'
 
 export const ListEmployee = () => {
     const [employees, setEmployees] = useState([])
 
+    const response = async () => {
+        const res = await getAllEmployees();
+        setEmployees(res.data)
+    }
+
     useEffect(() => {
-        const response = async () => {
-            const res = await getAllEmployees();
-            setEmployees(res.data)
-        }
         response();
     }, [])
+
+    const deleteEmp = async (id) => {
+        await deleteEmployee(id)
+        response();
+    }
 
     return (
         <div className='container'>
@@ -38,6 +44,7 @@ export const ListEmployee = () => {
                                 <td>{employee.emailId}</td>
                                 <td>
                                     <Link className='btn btn-info' to={`/edit-employee/${employee.id}`}>Update</Link>
+                                    <button className='btn btn-danger ml-5' style={{ marginLeft: "10px" }} onClick={() => deleteEmp(employee.id)}>Delete</button>
                                 </td>
                             </tr>
                         ))
