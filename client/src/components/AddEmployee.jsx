@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
 import { useHistory, useParams } from "react-router"
-import { createEmployee, getEmployeeById } from "../services/EmployeeService"
+import { createEmployee, getEmployeeById, updateEmployee } from "../services/EmployeeService"
 
 export const AddEmployee = () => {
     const [firstName, setFirstName] = useState('')
@@ -9,14 +9,15 @@ export const AddEmployee = () => {
     const history = useHistory()
     const { id } = useParams()
 
-    const saveEmployee = async (e) => {
+    const saveOrUpdateEmployee = async (e) => {
         e.preventDefault();
-
         const employee = { firstName, lastName, emailId }
-
         try {
-            await createEmployee(employee)
-
+            if (id) {
+                await updateEmployee(id, employee)
+            } else {
+                await createEmployee(employee)
+            }
             history.push('/employees')
         } catch (error) {
             console.log(error);
@@ -56,7 +57,10 @@ export const AddEmployee = () => {
                                     <input type="text" placeholder='Enter Email' name='emailId' className='form-control' value={emailId} onChange={(e) => setEmailId(e.target.value)} />
                                 </div>
 
-                                <button className='btn btn-success' onClick={(e) => saveEmployee(e)}>Submit</button>
+                                <button className='btn btn-success' onClick={(e) => saveOrUpdateEmployee(e)}>Submit</button>
+                                <button className='btn btn-danger' onClick={() => {
+                                    history.push('/employees')
+                                }}>Cancel</button>
                             </form>
                         </div>
                     </div>
