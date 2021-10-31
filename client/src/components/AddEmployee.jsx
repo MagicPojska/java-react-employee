@@ -1,16 +1,27 @@
 import { useState } from "react"
+import { useHistory } from "react-router"
+import { createEmployee } from "../services/EmployeeService"
 
 export const AddEmployee = () => {
     const [firstName, setFirstName] = useState('')
     const [lastName, setLastName] = useState('')
     const [emailId, setEmailId] = useState('')
+    const history = useHistory()
 
-    const saveEmployee = (e) => {
+    const saveEmployee = async (e) => {
         e.preventDefault();
 
         const employee = { firstName, lastName, emailId }
 
-        console.log(employee)
+        try {
+            await createEmployee(employee)
+
+            history.push('/employees')
+        } catch (error) {
+            console.log(error);
+        }
+
+
     }
 
     return (
